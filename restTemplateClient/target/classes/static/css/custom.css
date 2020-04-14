@@ -1,0 +1,32 @@
+.center {
+    margin: 100px auto;
+}
+
+.form-title {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.login-btn {
+    margin-top: 10px;
+}
+
+.left-menu {
+    margin-top: 40px;
+}
+
+.td-center {
+    align: center;
+}
+
+.fix-table {
+    width: 500px;
+}
+
+.modal-width {
+    width: 600px;
+}

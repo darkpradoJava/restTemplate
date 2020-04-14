@@ -12,7 +12,7 @@ import restTemplateServer.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/api")
 public class UsersRestController {
 
     @Autowired
