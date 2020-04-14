@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    fetch('http://localhost:8080/api/users')
+
+    const createTable = () => fetch('http://localhost:8080/api/users')
         .then((response) => {
             return response.json();
         })
@@ -25,19 +26,21 @@ $(document).ready(function () {
             $('#users').empty().append(output);
         });
 
-    const formAdd = document.getElementById('formAdd');
-
-    formAdd.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        fetch('http://localhost:8080/api/add', {
-            method: 'post',
-            body: formData
+    function addUser() {
+        const formAdd = document.getElementById('formAdd');
+        formAdd.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('http://localhost:8080/api/add', {
+                method: 'post',
+                body: formData
+            });
+            location.reload();
         });
-        location.reload();
-    });
+    }
 
-    $(document).on("click", ".btn_delete", function () {
+
+    const deleteUser = () => $(document).on("click", ".btn_delete", function () {
         const userId = $(this).attr("data-btn-id");
         fetch('http://localhost:8080/api/delete?id=' + userId, {
             method: 'delete',
@@ -45,7 +48,7 @@ $(document).ready(function () {
         location.reload();
     });
 
-    $(document).on("click", ".btn_edit", function () {
+    const editUser = () => $(document).on("click", ".btn_edit", function () {
         const id = $(this).attr("data-btn-id");
         const formEdit = document.getElementById('formEdit');
         formEdit.addEventListener('submit', function (e) {
@@ -58,6 +61,11 @@ $(document).ready(function () {
             });
             location.reload();
         });
-    })
+    });
+
+    createTable();
+    addUser();
+    deleteUser();
+    editUser();
 
 })
