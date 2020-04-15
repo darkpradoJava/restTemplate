@@ -50,11 +50,12 @@ $(document).ready(function () {
 
     const editUser = () => $(document).on("click", ".btn_edit", function () {
         const id = $(this).attr("data-btn-id");
+        createFormEdit(id);
         const formEdit = document.getElementById('formEdit');
         formEdit.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
-            formData.append('id', id);
+            formData.set('id', id);
             fetch('http://localhost:8080/api/edit', {
                 method: 'put',
                 body: formData
@@ -62,6 +63,31 @@ $(document).ready(function () {
             location.reload();
         });
     });
+
+    function createFormEdit(id) {
+        fetch('http://localhost:8080/api/getUserById?id=' + Number.parseInt(id))
+            .then((response) => {
+                return response.json();
+            })
+            .then((item) => {
+                var output = '';
+                output += `<input type="number" name="id" id="idEdit" placeholder="${item.id}" readonly>`;
+                output += '<label for="idEdit">id</label><br>';
+                output += `<input type="text" name="login" id="loginEdit" placeholder="${item.username}">`;
+                output += '<label for="loginEdit">login</label><br>';
+                output += `<input type="text" name="password" id="passwordEdit" placeholder="${item.password}">`;
+                output += '<label for="passwordEdit">password</label><br>';
+                output += `<input type="text" name="name" id="nameEdit" placeholder="${item.name}">`;
+                output += '<label for="nameEdit">name</label><br>';
+                for (let i = 0; i < item.roles.length; i++) {
+                    output += `<input type="text" name="role" id="roleEdit" placeholder="${item.roles[i].role}">`;
+                }
+                output += '<label for="roleEdit">role</label><br>';
+                output += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+                output += '<button type="submit" class="btn btn-primary">Edit user</button>';
+                $('#formEdit').empty().append(output);
+            });
+    }
 
     createTable();
     addUser();
